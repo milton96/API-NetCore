@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using API_JWT_NETCORE.Models;
+using API_JWT_NETCORE.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -6,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace API_JWT_NETCORE.Controllers
@@ -48,6 +51,21 @@ namespace API_JWT_NETCORE.Controllers
             if (ok == null)
                 return BadRequest();
             return Ok("Conexión exitosa");
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login(LoginRequest login)
+        {
+            try
+            {
+                Usuario u = await Usuario.Login(login);
+                return Ok(u);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { errors = new { General = new string[] { ex.Message } } });
+            }
         }
     }
 }
