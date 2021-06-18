@@ -17,5 +17,15 @@ namespace API_JWT_NETCORE.Helpers
         {
             return new { errors = new { General = new string[] { exception.Message } } };
         }
+
+        public static object ToDB(this String value)
+        {
+            return String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value) ? DBNull.Value : (object)value;
+        }
+
+        public static object ToDB(this int value)
+        {
+            return value <= 0 ? DBNull.Value : (object)value;
+        }
     }
 }
