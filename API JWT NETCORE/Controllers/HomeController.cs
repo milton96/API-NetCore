@@ -50,7 +50,7 @@ namespace API_JWT_NETCORE.Controllers
             }
 
             if (ok == null)
-                return BadRequest();
+                return BadRequest("No se pudo conectar");
             return Ok("Conexión exitosa");
         }
 
