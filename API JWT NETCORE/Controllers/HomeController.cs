@@ -1,4 +1,5 @@
-﻿using API_JWT_NETCORE.Models;
+﻿using API_JWT_NETCORE.Helpers;
+using API_JWT_NETCORE.Models;
 using API_JWT_NETCORE.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -60,11 +61,11 @@ namespace API_JWT_NETCORE.Controllers
             try
             {
                 Usuario u = await Usuario.Login(login);
-                return Ok(u);
+                return Ok(new { token = await JWTHelper.GenerarToken(u) });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { errors = new { General = new string[] { ex.Message } } });
+                return BadRequest(ex.ToLista());
             }
         }
     }

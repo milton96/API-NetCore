@@ -12,5 +12,10 @@ namespace API_JWT_NETCORE.Helpers
         {
             return reader.IsDBNull(index) ? default : (T)reader.GetValue(index);
         }
+
+        public static object ToLista(this Exception exception)
+        {
+            return new { errors = new { General = new string[] { exception.Message } } };
+        }
     }
 }
