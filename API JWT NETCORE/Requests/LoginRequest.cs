@@ -12,7 +12,7 @@ namespace API_JWT_NETCORE.Requests
         [Required(ErrorMessage = "El correo es requerido")]
         [RegularExpression(RegexHelper.Correo, ErrorMessage = "El correo no tiene el formato correcto")]
         public string Correo { get; set; }
-        [Required(ErrorMessage = "La contraseña es requerida")]
+        [Required(ErrorMessage = "La contraseña es requerida")]        
         public string Password { get; set; }
     }
 }
