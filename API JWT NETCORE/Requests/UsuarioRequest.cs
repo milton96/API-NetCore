@@ -9,7 +9,6 @@ namespace API_JWT_NETCORE.Requests
 {
     public class UsuarioRequest
     {
-        public int Id { get; set; }
         [Required(ErrorMessage = "El rol del usuario es requerido")]
         public int Rol { get; set; }
         [Required(ErrorMessage = "El nombre del usuario es requerido")]
@@ -21,5 +20,17 @@ namespace API_JWT_NETCORE.Requests
         public string Correo { get; set; }
         [Required(ErrorMessage = "La contraseña del usuario es requerida")]
         public string Password { get; set; }
+    }
+
+    public class EditarUsuarioRequest
+    {
+        [Required(ErrorMessage = "El identificador del usuario es requerido")]
+        public int Id { get; set; }
+        public int Rol { get; set; }
+        public string Nombre { get; set; }
+        public string ApellidoPaterno { get; set; }
+        public string ApellidoMaterno { get; set; }
+        [RegularExpression(RegexHelper.Correo, ErrorMessage = "El correo no tiene el formato correcto")]
+        public string Correo { get; set; }
     }
 }

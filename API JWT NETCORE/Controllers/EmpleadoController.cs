@@ -89,11 +89,29 @@ namespace API_JWT_NETCORE.Controllers
 
         [HttpPut]
         [Route("")]
-        public async Task<IActionResult> Editar(UsuarioRequest usuario)
+        public async Task<IActionResult> Editar(EditarUsuarioRequest usuario)
         {
             try
             {
-                return Ok(usuario);
+                if (usuario.Id <= 0) throw new Exception("Usuario no válido");
+
+                Usuario u = await Usuario.ObtenerPorId(usuario.Id);
+                if (usuario.Rol > 0)
+                {
+                    Rol rol = await Rol.ObtenerPorCodigo(usuario.Rol);
+                    if (rol == null) throw new Exception("El rol del usuario es inválido");
+                    if (rol.Id != u.IdRol.Id)
+                        u.IdRol = rol;
+                }
+
+                u.Nombre = String.IsNullOrEmpty(usuario.Nombre) || String.IsNullOrWhiteSpace(usuario.Nombre) ? u.Nombre : usuario.Nombre;
+                u.ApellidoPaterno = usuario.ApellidoPaterno;
+                u.ApellidoMaterno = usuario.ApellidoMaterno;
+                u.Correo = String.IsNullOrEmpty(usuario.Correo) || String.IsNullOrWhiteSpace(usuario.Correo) ? u.Correo : usuario.Correo;
+
+                await u.Actualizar();
+
+                return Ok();
             }
             catch (Exception ex)
             {

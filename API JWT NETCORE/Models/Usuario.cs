@@ -297,5 +297,43 @@ namespace API_JWT_NETCORE.Models
             }
             return result;
         }
+
+        public async Task Actualizar()
+        {
+            try
+            {
+                string query = @"UPDATE [dbo].[Usuario] 
+                                SET 
+                                    IdRol = @Rol, 
+                                    Nombre = @Nombre, 
+                                    ApellidoPaterno = @ApellidoPaterno, 
+                                    ApellidoMaterno = @ApellidoMaterno,
+                                    Correo = @Correo
+                                WHERE ID = @ID";
+                using (SqlConnection con = Conectar())
+                {
+                    using (SqlCommand command = new SqlCommand(query, con)
+                    {
+                        CommandType = CommandType.Text,
+                        CommandTimeout = 60
+                    })
+                    {
+                        command.Parameters.AddWithValue("@ID", Id);
+                        command.Parameters.AddWithValue("@Rol", IdRol.Id);
+                        command.Parameters.AddWithValue("@Nombre", Nombre);
+                        command.Parameters.AddWithValue("@ApellidoPaterno", ApellidoPaterno.ToDB());
+                        command.Parameters.AddWithValue("@ApellidoMaterno", ApellidoMaterno.ToDB());
+                        command.Parameters.AddWithValue("@Correo", Correo);
+                        con.Open();
+                        await command.ExecuteNonQueryAsync();                        
+                        con.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
