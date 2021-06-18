@@ -107,7 +107,15 @@ namespace API_JWT_NETCORE.Controllers
         {
             try
             {
-                return Ok("desactivar usuario: " + id);
+                if (id <= 0) throw new Exception("Usuario no válido");
+
+                Usuario u = await Usuario.ObtenerPorId(id);
+                if (u == null) throw new Exception("El usuario no existe");
+
+                int total = await u.Desactivar();
+                if (total <= 0) throw new Exception("Ocurrió un problema al desactivar el usuario");
+
+                return Ok();
             }
             catch (Exception ex)
             {
