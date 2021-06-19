@@ -1,3 +1,4 @@
+using API_JWT_NETCORE.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,7 +44,8 @@ namespace API_JWT_NETCORE
                     )
                 };
             });
-            services.AddControllers();
+            //services.AddScoped<PermisosFilter>();
+            services.AddControllers();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

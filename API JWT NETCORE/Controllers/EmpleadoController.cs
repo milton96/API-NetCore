@@ -1,4 +1,5 @@
-﻿using API_JWT_NETCORE.Helpers;
+﻿using API_JWT_NETCORE.Filters;
+using API_JWT_NETCORE.Helpers;
 using API_JWT_NETCORE.Models;
 using API_JWT_NETCORE.Requests;
 using Microsoft.AspNetCore.Authorization;
@@ -32,6 +33,7 @@ namespace API_JWT_NETCORE.Controllers
 
         [HttpPost]
         [Route("")]
+        [TypeFilter(typeof(PermisosFilter), Arguments = new object[] { new int[] { (int)Roles.Administrador } })]
         public async Task<IActionResult> Crear(UsuarioRequest usuario)
         {
             try
@@ -89,6 +91,7 @@ namespace API_JWT_NETCORE.Controllers
 
         [HttpPut]
         [Route("")]
+        [TypeFilter(typeof(PermisosFilter), Arguments = new object[] { new int[] { (int)Roles.Administrador } })]
         public async Task<IActionResult> Editar(EditarUsuarioRequest usuario)
         {
             try
@@ -121,6 +124,7 @@ namespace API_JWT_NETCORE.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [TypeFilter(typeof(PermisosFilter), Arguments = new object[] { new int[] { (int)Roles.Administrador } })]
         public async Task<IActionResult> Desactivar(int id)
         {
             try
