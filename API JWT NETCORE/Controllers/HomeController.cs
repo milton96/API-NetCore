@@ -68,5 +68,26 @@ namespace API_JWT_NETCORE.Controllers
                 return BadRequest(ex.ToLista());
             }
         }
+
+        [HttpPost]
+        [Route("tabla-prueba")]
+        public IActionResult TablaPrueba()
+        {
+            try
+            {
+                TablaHelper tabla = TablaHelper.TablaPrueba(10, 20);
+
+                //tabla.Ordenar();
+                object res = new
+                {
+                    tabla
+                };
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToLista());
+            }
+        }
     }
 }
