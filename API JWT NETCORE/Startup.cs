@@ -19,6 +19,7 @@ namespace API_JWT_NETCORE
 {
     public class Startup
     {
+        private readonly string policyName = "localhost";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,6 +30,15 @@ namespace API_JWT_NETCORE
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: policyName,
+                    builder =>
+                    {
+                        builder.WithOrigins("*").WithMethods("GET", "POST", "PUT", "DELETE");
+                    });
+            });
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters()
@@ -57,6 +67,8 @@ namespace API_JWT_NETCORE
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(policyName);
 
             app.UseAuthentication();
 
