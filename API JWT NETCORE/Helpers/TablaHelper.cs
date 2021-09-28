@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,8 +16,13 @@ namespace API_JWT_NETCORE.Helpers
             FilasPagina = 10;
         }
 
+        [JsonPropertyName("Columnas")]
         public IEnumerable<Columna> Columnas { get; set; }
+
+        [JsonPropertyName("Filas")]
         public IEnumerable<Fila> Filas { get; set; }
+
+        [JsonPropertyName("FilasPagina")]
         public int FilasPagina { get; set; }
 
         public void Ordenar()
@@ -105,10 +111,19 @@ namespace API_JWT_NETCORE.Helpers
             TipoFiltro = Filtros.TEXTO;
         }
 
+        [JsonPropertyName("Posicion")]
         public int Posicion { get; set; }
+
+        [JsonPropertyName("Valor")]
         public string Valor { get; set; }
+
+        [JsonPropertyName("Filtrar")]
         public bool Filtrar { get; set; }
+
+        [JsonPropertyName("Ordenar")]
         public bool Ordenar { get; set; }
+
+        [JsonPropertyName("TipoFiltro")]
         public string TipoFiltro { get; set; }
 
         public struct Filtros
@@ -128,7 +143,10 @@ namespace API_JWT_NETCORE.Helpers
             Mostrar = true;
         }
 
+        [JsonPropertyName("Celdas")]
         public IEnumerable<Celda> Celdas { get; set; }
+
+        [JsonPropertyName("Mostrar")]
         public bool Mostrar { get; set; }
     }
 
@@ -138,7 +156,10 @@ namespace API_JWT_NETCORE.Helpers
         {
         }
 
+        [JsonPropertyName("Posicion")]
         public int Posicion { get; set; }
+
+        [JsonPropertyName("Valor")]
         public string Valor { get; set; }
     }
 }
